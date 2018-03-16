@@ -1,1 +1,9 @@
-<app-posts></app-posts>
+
+<div class="container" >
+    <app-posts 
+    
+    *ngFor = "let post of posts"
+    [PostModel] = "post"
+    (foiClicado)="filhoFoiClicado($event)">
+</app-posts>
+</div>
