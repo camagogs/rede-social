@@ -1,9 +1,10 @@
 
 <div class="container" >
     <app-posts 
-    
     *ngFor = "let post of posts"
     [PostModel] = "post"
-    (foiClicado)="filhoFoiClicado($event)">
+    (foiClicado)="filhoFoiClicado($event)"
+    (foiExcluido)="filhoFoiExcluido($event)"
+    (buscado)="buscar($event)">
 </app-posts>
 </div>
