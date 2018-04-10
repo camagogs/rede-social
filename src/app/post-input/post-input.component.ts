@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PostModel} from '../posts/post.model';
@@ -12,14 +12,31 @@ import { PostModel} from '../posts/post.model';
 export class PostInputComponent  {
 
   @Output() newPost = new EventEmitter();
+  @Output() FoiAtualizado = new EventEmitter();
+  @Input() Post: PostModel;
+  @Input() idRota: boolean
   nome_post: string
   texto_post: string
 
   constructor() { }
-
+  
   onSubmit(event){
-    event.preventDefault();
-    this.newPost.emit(
-      new PostModel(30,this.nome_post, this.texto_post, 0));
+    if (this.idRota){
+      event.preventDefault();
+      this.Post.texto = this.texto_post;
+      this.Post.nomePessoa = this.nome_post;
+      this.texto_post = ''
+      this.nome_post = ''
+      this.FoiAtualizado.emit(
+        this.Post);        
+    }
+    else{
+      event.preventDefault();
+      this.newPost.emit(
+      new PostModel('',this.nome_post, this.texto_post, 0));
+    }
+    
   }
+
+  
 }

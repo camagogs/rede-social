@@ -6,8 +6,7 @@ import { PostService } from '../posts/posts.service';
 @Component({
   selector: 'app-linha-do-tempo',
   templateUrl: './linha-do-tempo.component.html',
-  styleUrls: ['./linha-do-tempo.component.css'],
-  providers: [PostService]
+  styleUrls: ['./linha-do-tempo.component.css']
 })
 export class LinhaDoTempoComponent implements OnInit {
 
@@ -16,15 +15,33 @@ export class LinhaDoTempoComponent implements OnInit {
   constructor( private postService: PostService) { }
 
   ngOnInit() {
-    this.posts = this.postService.getPost();
-  }           
+    this.fillTable();
+  }
+  
+  fillTable() {
+    this.postService.getPosts()
+      .subscribe((data) => {
+        this.posts = data;
+      },
+      (error) => console.log(error));
+  }          
+
   filhoFoiClicado(dado){
-    this.postService.darLike(dado);
+    dado.qtdLikes = dado.qtdLikes + 1
+    this.postService.darLike(dado)
+      .subscribe(data=>{
+        this.fillTable
+      },
+    error=>console.log(error));
   }
-  filhoFoiExcluido(dado){
-    this.postService.excluirPost(dado.id);
-    console.log(dado)
+  filhoFoiExcluido(post: PostModel){
+    this.postService.excluirPost(post)
+      .subscribe(data=>{
+        this.fillTable();
+      },
+      error=>console.log(error));
   }
+  
   buscar(dado){
     console.log(this.postService.buscarPost(dado));
   }
