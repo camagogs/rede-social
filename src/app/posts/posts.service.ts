@@ -30,18 +30,18 @@ export class PostService{
         .catch((error: Response) => Observable.throw(error))
       }
 
-      buscarPost(post){
-         return this.http.get(this.url)
-            .map((response:Response)=>{
-                for(let b of response.json()){
-                    if(b.id == post){
-                        this.post = new PostModel(b.id , b.nomePessoa, b.texto, b.qtdLikes);    
-                    }
-                }
-                return this.post;
-            })
-            .catch((error: Response) => Observable.throw(error))
-      }
+    //   buscarPost(post){
+    //      return this.http.get(this.url)
+    //         .map((response:Response)=>{
+    //             for(let b of response.json()){
+    //                 if(b.id == post){
+    //                     this.post = new PostModel(b.id , b.nomePessoa, b.texto, b.qtdLikes);    
+    //                 }
+    //             }
+    //             return this.post;
+    //         })
+    //         .catch((error: Response) => Observable.throw(error))
+    //   }
       inserirPost(post: PostModel){
         return this.http.post(this.url, post)
                 .map((response: Response) =>  response.json())
